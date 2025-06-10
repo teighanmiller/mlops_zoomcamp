@@ -1,0 +1,95 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  TRAIN_YEAR: '2023'
+  TRAIN_MONTH: '1'
+
+stages:
+- stage: ML_Pipeline
+  jobs:
+
+  - job: Read_Train_Data
+    displayName: 'Download Training Data'
+    steps:
+    - script: |
+        python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type train --output data/train.parquet
+      displayName: 'Run read_data.py for train'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: data/train.parquet
+        artifactName: train_data
+
+  - job: Read_Val_Data
+    displayName: 'Download Validation Data'
+    steps:
+    - script: |
+        python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type val --output data/val.parquet
+      displayName: 'Run read_data.py for val'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: data/val.parquet
+        artifactName: val_data
+
+  - job: Preprocess
+    dependsOn: [Read_Train_Data, Read_Val_Data]
+    displayName: 'Preprocess Features'
+    steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: train_data
+        downloadPath: data
+
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: val_data
+        downloadPath: data
+
+    - script: |
+        python scripts/preprocess.py \
+          --train_input data/train.parquet \
+          --val_input data/val.parquet \
+          --output_dir artifacts/preprocessed
+      displayName: 'Run preprocess.py'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: artifacts/preprocessed
+        artifactName: preprocessed_data
+
+  - job: Train
+    dependsOn: Preprocess
+    displayName: 'Train Model'
+    steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: preprocessed_data
+        downloadPath: artifacts/preprocessed
+
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: train_data
+        downloadPath: data
+
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: val_data
+        downloadPath: data
+
+    - script: |
+        python scripts/train.py \
+          --input_dir artifacts/preprocessed \
+          --train_parquet data/train.parquet \
+          --val_parquet data/val.parquet \
+          --output_dir models
+      displayName: 'Run train.py'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: models
+        artifactName: trained_model

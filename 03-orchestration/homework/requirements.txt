@@ -1,0 +1,8 @@
+pandas
+pyarrow
+scikit-learn
+xgboost
+mlflow
+hyperopt
+jupyter
+numpy

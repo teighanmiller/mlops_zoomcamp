@@ -1,0 +1,15 @@
+artifact_uri: file:///home/azureuser/notebooks/02-experiment_tracking/homework/mlruns/0/25ed4da998ac4f65a1ad43cc6c4429ff/artifacts
+end_time: 1748709018915
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 25ed4da998ac4f65a1ad43cc6c4429ff
+run_name: placid-mink-330
+run_uuid: 25ed4da998ac4f65a1ad43cc6c4429ff
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748708989992
+status: 3
+tags: []
+user_id: azureuser

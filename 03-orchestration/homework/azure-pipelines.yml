@@ -18,6 +18,7 @@ stages:
     - script: |
         python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type train --output data/train.parquet
       displayName: 'Run read_data.py for train'
+      workingDirectory: 03-orchestration/homework
 
     - task: PublishBuildArtifacts@1
       inputs:
@@ -30,6 +31,7 @@ stages:
     - script: |
         python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type val --output data/val.parquet
       displayName: 'Run read_data.py for val'
+      workingDirectory: 03-orchestration/homework
 
     - task: PublishBuildArtifacts@1
       inputs:
@@ -56,6 +58,7 @@ stages:
           --val_input data/val.parquet \
           --output_dir artifacts/preprocessed
       displayName: 'Run preprocess.py'
+      workingDirectory: 03-orchestration/homework
 
     - task: PublishBuildArtifacts@1
       inputs:
@@ -88,6 +91,7 @@ stages:
           --val_parquet data/val.parquet \
           --output_dir models
       displayName: 'Run train.py'
+      workingDirectory: 03-orchestration/homework
 
     - task: PublishBuildArtifacts@1
       inputs:

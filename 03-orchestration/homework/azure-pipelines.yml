@@ -20,7 +20,7 @@ stages:
         pip install -r requirements.txt
       displayName: "Install python dependencies"
       workingDirectory: 03-orchestration/homework
-      
+
     - script: |
         mkdir -p data
       displayName: 'Create data directory'
@@ -33,7 +33,7 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: data/train.parquet
+        pathToPublish: 03-orchestration/homework/data
         artifactName: train_data
 
   - job: Read_Val_Data
@@ -57,7 +57,7 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: data/val.parquet
+        pathToPublish: 03-orchestration/homework/data
         artifactName: val_data
 
   - job: Preprocess
@@ -90,7 +90,7 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: artifacts/preprocessed
+        pathToPublish: 03-orchestration/homework/data 
         artifactName: preprocessed_data
 
   - job: Train

@@ -20,6 +20,11 @@ stages:
         pip install -r requirements.txt
       displayName: "Install python dependencies"
       workingDirectory: 03-orchestration/homework
+      
+    - script: |
+        mkdir -p data
+      displayName: 'Create data directory'
+      workingDirectory: 03-orchestration/homework
 
     - script: |
         python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type train --output data/train.parquet
@@ -38,6 +43,11 @@ stages:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
       displayName: "Install python dependencies"
+      workingDirectory: 03-orchestration/homework
+
+    - script: |
+        mkdir -p data
+      displayName: 'Create data directory'
       workingDirectory: 03-orchestration/homework
       
     - script: |

@@ -16,6 +16,12 @@ stages:
     displayName: 'Download Training Data'
     steps:
     - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: "Install python dependencies"
+      workingDirectory: 03-orchestration/homework
+
+    - script: |
         python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type train --output data/train.parquet
       displayName: 'Run read_data.py for train'
       workingDirectory: 03-orchestration/homework
@@ -28,6 +34,12 @@ stages:
   - job: Read_Val_Data
     displayName: 'Download Validation Data'
     steps:
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: "Install python dependencies"
+      workingDirectory: 03-orchestration/homework
+      
     - script: |
         python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type val --output data/val.parquet
       displayName: 'Run read_data.py for val'
@@ -42,6 +54,12 @@ stages:
     dependsOn: [Read_Train_Data, Read_Val_Data]
     displayName: 'Preprocess Features'
     steps:
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: "Install python dependencies"
+      workingDirectory: 03-orchestration/homework
+
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: train_data
@@ -69,6 +87,12 @@ stages:
     dependsOn: Preprocess
     displayName: 'Train Model'
     steps:
+    - script: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      displayName: "Install python dependencies"
+      workingDirectory: 03-orchestration/homework
+
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: preprocessed_data

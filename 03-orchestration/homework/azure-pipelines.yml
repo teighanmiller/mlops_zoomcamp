@@ -111,12 +111,12 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: train_data
-        downloadPath: data
+        downloadPath: $(Pipeline.Workspace)
 
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: val_data
-        downloadPath: data
+        downloadPath: $(Pipeline.Workspace)
 
     - script: |
         python scripts/train.py \

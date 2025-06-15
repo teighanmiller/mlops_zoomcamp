@@ -73,24 +73,24 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: train_data
-        downloadPath: data
+        downloadPath: $(Pipeline.Workspace)
 
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: val_data
-        downloadPath: data
+        downloadPath: $(Pipeline.Workspace)
 
     - script: |
         python scripts/preprocess.py \
-          --train_input data/train_data/data/train.parquet \
-          --val_input data/val_data/data/val.parquet \
-          --output_dir artifacts/preprocessed
+          --train_input $(Pipeline.Workspace)/train_data/data/train.parquet \
+          --val_input $(Pipeline.Workspace)/val_data/data/val.parquet \
+          --output_dir $(Preprocess.Workspace)/preprocessed_data
       displayName: 'Run preprocess.py'
       workingDirectory: 03-orchestration/homework
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: 03-orchestration/homework/data 
+        pathToPublish: $(Pipeline.Workspace)/preprocessed_data
         artifactName: preprocessed_data
 
   - job: Train
@@ -111,12 +111,12 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: train_data
-        downloadPath: data 
+        downloadPath: $(Pipeline.Workspace)
 
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: val_data
-        downloadPath: data
+        downloadPath: $(Pipeline.Workspace)
 
     - script: |
         python scripts/train.py \

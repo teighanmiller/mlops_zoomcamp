@@ -82,8 +82,8 @@ stages:
 
     - script: |
         python scripts/preprocess.py \
-          --train_input data/train.parquet \
-          --val_input data/val.parquet \
+          --train_input $(Pipeline.Workspace)/train_data/data/train.parquet \
+          --val_input $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir artifacts/preprocessed
       displayName: 'Run preprocess.py'
       workingDirectory: 03-orchestration/homework

@@ -121,8 +121,8 @@ stages:
     - script: |
         python scripts/train.py \
           --input_dir artifacts/preprocessed \
-          --train_parquet data/train.parquet \
-          --val_parquet data/val.parquet \
+          --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
+          --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir models
       displayName: 'Run train.py'
       workingDirectory: 03-orchestration/homework

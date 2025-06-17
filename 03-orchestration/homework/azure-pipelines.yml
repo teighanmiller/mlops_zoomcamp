@@ -82,8 +82,8 @@ stages:
 
     - script: |
         python scripts/preprocess.py \
-          --train_input $(Pipeline.Workspace)/_train_data/data/train.parquet \
-          --val_input $(Pipeline.Workspace)/_val_data/data/val.parquet \
+          --train_input $(Pipeline.Workspace)/train_data/data/train.parquet \
+          --val_input $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir $(Pipeline.Workspace)/preprocessed_data
       displayName: 'Run preprocess.py'
       workingDirectory: 03-orchestration/homework
@@ -121,8 +121,8 @@ stages:
     - script: |
         python scripts/train.py \
           --input_dir artifacts/preprocessed \
-          --train_parquet $(Pipeline.Workspace)/_train_data/data/train.parquet \
-          --val_parquet $(Pipeline.Workspace)/_val_data/data/val.parquet \
+          --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
+          --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir models
       displayName: 'Run train.py'
       workingDirectory: 03-orchestration/homework

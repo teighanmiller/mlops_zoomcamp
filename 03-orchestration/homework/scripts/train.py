@@ -70,7 +70,7 @@ if __name__ == "__main__":
     y_train = df_train['duration'].values
     y_val = df_val['duration'].values
 
-    run_id = train_model(X_train, y_train, X_val, dv, output_dir)
+    run_id = train_model(X_train, y_train, X_val, y_val, dv)
     print(f"MLflow run_id: {run_id}")
 
     # Save run_id to file

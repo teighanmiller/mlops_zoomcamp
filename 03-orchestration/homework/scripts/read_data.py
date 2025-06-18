@@ -2,7 +2,7 @@ import argparse
 import pandas as pd
 
 def read_dataframe(year, month):
-    url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_{year}-{month:02d}.parquet'
+    url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{year}-{month:02d}.parquet'
     df = pd.read_parquet(url)
     print(f"Number of Records: {len(df)}")
 

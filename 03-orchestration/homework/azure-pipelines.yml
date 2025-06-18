@@ -6,7 +6,7 @@ pool:
 
 variables:
   TRAIN_YEAR: '2023'
-  TRAIN_MONTH: '1'
+  TRAIN_MONTH: '3'
 
 stages:
 - stage: ML_Pipeline

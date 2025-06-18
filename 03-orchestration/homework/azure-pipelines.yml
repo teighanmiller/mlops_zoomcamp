@@ -94,6 +94,11 @@ stages:
           --output_dir $(Pipeline.Workspace)/preprocessed_data
       displayName: 'Run preprocess.py'
       workingDirectory: 03-orchestration/homework
+      
+    - script: |
+        echo "DEBUG: List contents of preprocessed_data"
+        find $(Pipeline.Workspace)/preprocessed_data
+      displayName: 'Debug: Check preprocessed_data files'
 
     - task: PublishBuildArtifacts@1
       inputs:

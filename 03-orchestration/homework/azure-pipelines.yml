@@ -119,6 +119,11 @@ stages:
         artifactName: train_data
         downloadPath: $(Pipeline.Workspace)
 
+    - script: |
+        echo "DEBUG: Listing contents of train_data artifact"
+        find $(Pipeline.Workspace)/train_data
+      displayName: 'Debug: Contents of train_data'
+
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: val_data

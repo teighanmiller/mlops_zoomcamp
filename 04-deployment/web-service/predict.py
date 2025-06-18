@@ -12,4 +12,4 @@ def prepare_features(ride):
 def predict(features):
     X = dv.transform(features)
     preds = model.predict(X)
-    return preds
+    return preds[0]

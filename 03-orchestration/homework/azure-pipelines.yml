@@ -112,7 +112,7 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: preprocessed_data
-        downloadPath: artifacts/preprocessed
+        downloadPath: artifacts
 
     - task: DownloadBuildArtifacts@0
       inputs:

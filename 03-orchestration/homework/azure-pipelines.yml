@@ -65,15 +65,16 @@ stages:
     displayName: 'Preprocess Features'
     steps:
     - script: |
-        echo "Listing contents of Pipeline.Workspace...."
-        find $(Pipeline.Workspace)
-      displayName: 'Debug: List downloaded artifacts'
-
-    - script: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
       displayName: "Install python dependencies"
       workingDirectory: 03-orchestration/homework
+
+    - script: |
+        echo "Listing contents of Pipeline.Workspace...."
+        find $(Pipeline.Workspace)
+      displayName: 'Debug: List downloaded artifacts'
+
 
     - task: DownloadBuildArtifacts@0
       inputs:

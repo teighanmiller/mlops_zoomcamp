@@ -7,6 +7,7 @@ pool:
 variables:
   TRAIN_YEAR: '2023'
   TRAIN_MONTH: '3'
+  ARTIFACT_DIR: '$(Pipeline.Workspace)/train_data'
 
 stages:
 - stage: ML_Pipeline
@@ -135,9 +136,9 @@ stages:
       displayName: 'Debug: List artifact directory'
 
     - script: |
-        python -u $(Pipeline.Workspace)/train_data/03-orchestration/homework/scripts/train.py \
+        python -u $(ARTIFACT_DIR)/scripts/train.py \
           --input_dir artifacts/preprocessed_data \
-          --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
+          --train_parquet $(ARTIFACT_DIR)/data/train.parquet \
           --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir $(Pipeline.Workspace)/models
       displayName: 'Run train.py'

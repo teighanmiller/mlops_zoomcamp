@@ -151,5 +151,5 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: models
+        pathToPublish: $(Pipeline.Workspace)/models
         artifactName: trained_model

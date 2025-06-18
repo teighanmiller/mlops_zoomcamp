@@ -33,7 +33,7 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: 03-orchestration/homework/data
+        pathToPublish: 03-orchestration/homework
         artifactName: train_data
 
   - job: Read_Val_Data
@@ -57,13 +57,18 @@ stages:
 
     - task: PublishBuildArtifacts@1
       inputs:
-        pathToPublish: 03-orchestration/homework/data
+        pathToPublish: 03-orchestration/homework
         artifactName: val_data
 
   - job: Preprocess
     dependsOn: [Read_Train_Data, Read_Val_Data]
     displayName: 'Preprocess Features'
     steps:
+    - script: |
+        echo "Listing contents of Pipeline.Workspace...."
+        find $(Pipeline.Workspace)
+      displayName: 'Debug: List downloaded artifacts'
+
     - script: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt

@@ -27,7 +27,7 @@ stages:
       workingDirectory: 03-orchestration/homework
 
     - script: |
-        python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type train --output data/train.parquet
+        python -u scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type train --output data/train.parquet
       displayName: 'Run read_data.py for train'
       workingDirectory: 03-orchestration/homework
 
@@ -51,7 +51,7 @@ stages:
       workingDirectory: 03-orchestration/homework
       
     - script: |
-        python scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type val --output data/val.parquet
+        python -u scripts/read_data.py --year $(TRAIN_YEAR) --month $(TRAIN_MONTH) --type val --output data/val.parquet
       displayName: 'Run read_data.py for val'
       workingDirectory: 03-orchestration/homework
 
@@ -87,7 +87,7 @@ stages:
         downloadPath: $(Pipeline.Workspace)
 
     - script: |
-        python scripts/preprocess.py \
+        python -u scripts/preprocess.py \
           --train_input $(Pipeline.Workspace)/train_data/data/train.parquet \
           --val_input $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir $(Pipeline.Workspace)/preprocessed_data
@@ -112,7 +112,7 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: preprocessed_data
-        downloadPath: artifacts
+        downloadPath: artifacts/preprocessed
 
     - task: DownloadBuildArtifacts@0
       inputs:
@@ -125,8 +125,8 @@ stages:
         downloadPath: $(Pipeline.Workspace)
 
     - script: |
-        python scripts/train.py \
-          --input_dir artifacts \
+        python -u scripts/train.py \
+          --input_dir artifacts/preprocessed \
           --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
           --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir models

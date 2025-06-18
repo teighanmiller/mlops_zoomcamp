@@ -74,5 +74,5 @@ if __name__ == "__main__":
     print(f"MLflow run_id: {run_id}")
 
     # Save run_id to file
-    with open(output_dir / "run_id.txt") as f:
+    with open(output_dir / "run_id.txt", "w") as f:
         f.write(run_id)

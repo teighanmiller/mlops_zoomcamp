@@ -131,12 +131,12 @@ stages:
 
     - script: |
         python -u scripts/train.py \
-          --input_dir artifacts/preprocessed_data \
+          --input_dir $(Pipeline.Workspace)/artifacts/preprocessed_data \
           --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
           --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir models
       displayName: 'Run train.py'
-      workingDirectory: 03-orchestration/homework
+      workingDirectory: $(Pipeline.Workspace) 
 
     - task: PublishBuildArtifacts@1
       inputs:

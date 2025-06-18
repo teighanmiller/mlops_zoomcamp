@@ -4,6 +4,7 @@ import pandas as pd
 def read_dataframe(year, month):
     url = f'https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_{year}-{month:02d}.parquet'
     df = pd.read_parquet(url)
+    print(f"Number of Records: {len(df)}")
 
     df['duration'] = df.lpep_dropoff_datetime - df.lpep_pickup_datetime
     df.duration = df.duration.apply(lambda td: td.total_seconds() / 60)
@@ -15,6 +16,7 @@ def read_dataframe(year, month):
 
     df['PU_DO'] = df['PULocationID'] + '_' + df['DOLocationID']
 
+    print(f"Size of result: {len(df)}")
     return df
 
 if __name__ == '__main__':

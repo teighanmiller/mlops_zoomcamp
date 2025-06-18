@@ -6,10 +6,10 @@ import pandas as pd
 from sklearn.feature_extraction import DictVectorizer
 
 def create_X(df, dv=None):
-    # categorical = ['PU_DO']
-    categorical = ["PULocationID", "DOLocationID"]
-    # numerical = ['trip_distance']
-    dicts = df[categorical].to_dict(orient='records') #+ numerical].to_dict(orient='records')
+    categorical = ['PU_DO']
+    # categorical = ["PULocationID", "DOLocationID"]
+    numerical = ['trip_distance']
+    dicts = df[categorical + numerical].to_dict(orient='records') #+ numerical].to_dict(orient='records')
 
     if dv is None:
         dv = DictVectorizer(sparse=True)

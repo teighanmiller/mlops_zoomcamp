@@ -14,7 +14,7 @@ def read_dataframe(year, month):
     categorical = ['PULocationID', 'DOLocationID']
     df[categorical] = df[categorical].astype(str)
 
-    # df['PU_DO'] = df['PULocationID'] + '_' + df['DOLocationID']
+    df['PU_DO'] = df['PULocationID'] + '_' + df['DOLocationID']
 
     print(f"Size of result: {len(df)}")
     return df

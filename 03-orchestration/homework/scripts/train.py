@@ -4,55 +4,55 @@ from pathlib import Path
 
 import mlflow.sklearn
 import pandas as pd
-import xgboost as xg
+import xgboost as xgb
 from sklearn.metrics import root_mean_squared_error
 from sklearn.linear_model import LinearRegression
 import mlflow
 
 def train_model(X_train, y_train, X_val, y_val, dv):
 
-    mlflow.sklearn.autolog()
-    with mlflow.start_run() as run:
-        lr = LinearRegression()
-        lr.fit(X_train, y_train)
-
-        print(lr.intercept_)
-
+    # mlflow.sklearn.autolog()
     # with mlflow.start_run() as run:
-    #     train = xgb.DMatrix(X_train, label=y_train)
-    #     valid = xgb.DMatrix(X_val, label=y_val)
+    #     lr = LinearRegression()
+    #     lr.fit(X_train, y_train)
 
-    #     best_params = {
-    #         'learning_rate': 0.09585355369315604,
-    #         'max_depth': 30,
-    #         'min_child_weight': 1.060597050922164,
-    #         'objective': 'reg:linear',
-    #         'reg_alpha': 0.018060244040060163,
-    #         'reg_lambda': 0.011658731377413597,
-    #         'seed': 42
-    #     }
+    #     print(lr.intercept_)
 
-    #     mlflow.log_params(best_params)
+    with mlflow.start_run() as run:
+        train = xgb.DMatrix(X_train, label=y_train)
+        valid = xgb.DMatrix(X_val, label=y_val)
 
-    #     booster = xgb.train(
-    #         params=best_params,
-    #         dtrain=train,
-    #         num_boost_round=30,
-    #         evals=[(valid, 'validation')],
-    #         early_stopping_rounds=50
-    #     )
+        best_params = {
+            'learning_rate': 0.09585355369315604,
+            'max_depth': 30,
+            'min_child_weight': 1.060597050922164,
+            'objective': 'reg:linear',
+            'reg_alpha': 0.018060244040060163,
+            'reg_lambda': 0.011658731377413597,
+            'seed': 42
+        }
 
-    #     y_pred = booster.predict(valid)
-    #     rmse = root_mean_squared_error(y_val, y_pred)
-    #     mlflow.log_metric("rmse", rmse)
+        mlflow.log_params(best_params)
 
-    #     with open("models/preprocessor.b", "wb") as f_out:
-    #         pickle.dump(dv, f_out)
-    #     mlflow.log_artifact("models/preprocessor.b", artifact_path="preprocessor")
+        booster = xgb.train(
+            params=best_params,
+            dtrain=train,
+            num_boost_round=30,
+            evals=[(valid, 'validation')],
+            early_stopping_rounds=50
+        )
 
-    #     mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
+        y_pred = booster.predict(valid)
+        rmse = root_mean_squared_error(y_val, y_pred)
+        mlflow.log_metric("rmse", rmse)
 
-    #     return run.info.run_id
+        with open("models/preprocessor.b", "wb") as f_out:
+            pickle.dump(dv, f_out)
+        mlflow.log_artifact("models/preprocessor.b", artifact_path="preprocessor")
+
+        mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
+
+        return run.info.run_id
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

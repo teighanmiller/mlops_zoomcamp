@@ -136,6 +136,11 @@ stages:
         downloadPath: $(Pipeline.Workspace)
 
     - script: |
+        echo "DEBUG: Listing contents of $(Pipeline.Workspace)/preprocessed_data"
+        find $(Pipeline.Workspace)/preprocessed_data
+      displayName: 'Debug: List preprocessed_data contents'
+
+    - script: |
         python -u $(ARTIFACT_DIR)/scripts/train.py \
           --input_dir $(Pipeline.Workspace)/preprocessed_data/preprocessed_data \
           --train_parquet $(ARTIFACT_DIR)/data/train.parquet \

@@ -130,11 +130,11 @@ stages:
       displayName: 'Debug: List artifact directory'
 
     - script: |
-        python -u scripts/train.py \
-          --input_dir $(Pipeline.Workspace)/artifacts/preprocessed_data \
+        python -u $(Pipeline.Workspace)/train_data/03-orchestration/homework/scripts/train.py \
+          --input_dir artifacts/preprocessed_data \
           --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
           --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
-          --output_dir models
+          --output_dir $(Pipeline.Workspace)/models
       displayName: 'Run train.py'
       workingDirectory: $(Pipeline.Workspace) 
 

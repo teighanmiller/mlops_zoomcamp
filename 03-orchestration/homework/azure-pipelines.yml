@@ -118,7 +118,7 @@ stages:
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: preprocessed_data
-        downloadPath: artifacts
+        downloadPath: $(Pipeline.Workspace)
 
     - task: DownloadBuildArtifacts@0
       inputs:

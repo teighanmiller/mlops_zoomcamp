@@ -142,7 +142,7 @@ stages:
 
     - script: |
         python -u $(ARTIFACT_DIR)/scripts/train.py \
-          --input_dir $(Pipeline.Workspace)/preprocessed_data/preprocessed_data \
+          --input_dir $(Pipeline.Workspace)/preprocessed_data \
           --train_parquet $(ARTIFACT_DIR)/data/train.parquet \
           --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir $(Pipeline.Workspace)/models

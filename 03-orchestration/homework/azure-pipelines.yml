@@ -126,7 +126,7 @@ stages:
 
     - script: |
         python scripts/train.py \
-          --input_dir artifacts/preprocessed \
+          --input_dir artifacts \
           --train_parquet $(Pipeline.Workspace)/train_data/data/train.parquet \
           --val_parquet $(Pipeline.Workspace)/val_data/data/val.parquet \
           --output_dir models

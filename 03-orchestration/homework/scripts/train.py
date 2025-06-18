@@ -56,6 +56,8 @@ if __name__ == "__main__":
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    print("Looking for: ", input_dir / "X_train.pkl")
+
     with open(input_dir / 'X_train.pkl', 'rb') as f_in:
         X_train = pickle.load(f_in)
     with open(input_dir / 'X_val.pkl', 'rb') as f_in:

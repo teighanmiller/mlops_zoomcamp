@@ -6,7 +6,7 @@ def read_dataframe(year, month):
     df = pd.read_parquet(url)
     print(f"Number of Records: {len(df)}")
 
-    df['duration'] = df.lpep_dropoff_datetime - df.lpep_pickup_datetime
+    df['duration'] = df.tpep_dropoff_datetime - df.tpep_pickup_datetime
     df.duration = df.duration.apply(lambda td: td.total_seconds() / 60)
 
     df = df[(df.duration >= 1) & (df.duration <= 60)]

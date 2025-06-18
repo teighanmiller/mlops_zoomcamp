@@ -46,9 +46,10 @@ def train_model(X_train, y_train, X_val, y_val, dv):
         rmse = root_mean_squared_error(y_val, y_pred)
         mlflow.log_metric("rmse", rmse)
 
-        with open("models/preprocessor.b", "wb") as f_out:
+        preprocessor_path = output_dir / "preprocessor.b"
+        with open(preprocessor_path, "wb") as f_out:
             pickle.dump(dv, f_out)
-        mlflow.log_artifact("models/preprocessor.b", artifact_path="preprocessor")
+        mlflow.log_artifact(str(preprocessor_path), artifact_path="preprocessor")
 
         mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
 
